@@ -24,41 +24,51 @@ public class DocDB {
 	public func addDocument(at docPath: DocPath, dictionary: DocDBDictionary) throws {
 		let data = try options.serializer.encode(dictionary: dictionary)
 		try lowDocDB.addDocument(at: docPath, data: data)
-    }
+	}
 	
 	// UPDATE
-    
-	// ?
+	
+	public func updateDocument(at docPath: DocPath, updateDictionary: DocDBDictionary) throws -> DocDBDictionary {
+		guard let document = try self.document(at: docPath) else {
+			throw DocDBError.documentNotFoundForUpdate
+		}
+		var updatedDocument = document
+		for (key, value) in updateDictionary {
+			updatedDocument[key] = value
+		}
+		try self.addDocument(at: docPath, dictionary: updatedDocument)
+		return updatedDocument
+	}
 	
 	// READ
-    
+	
 	public func document(at docPath: DocPath) throws -> DocDBDictionary? {
 		guard let data = lowDocDB.document(at: docPath) else { return nil }
 		return try options.serializer.decode(data: data)
-    }
-    
-    public func documentExist(at docPath: DocPath) -> Bool {
-		return lowDocDB.documentExist(at: docPath)
-    }
-	
-	public func enumerator(at folderPath: DocPath) throws -> LowDocDB.Iterator {
-		return try lowDocDB.enumerator(at: folderPath)
 	}
-    
-    public func documentPaths(at folderPath: DocPath) throws -> [DocPath] {
-		return try lowDocDB.documentPaths(at: folderPath)
-    }
-    
-    public func documentIsFolder(_ docPath: DocPath) -> Bool {
+	
+	public func documentExist(at docPath: DocPath) -> Bool {
+		return lowDocDB.documentExist(at: docPath)
+	}
+	
+	public func enumerator(at folderPath: DocPath, includeFolders: Bool) throws -> LowDocDB.Iterator {
+		return try lowDocDB.enumerator(at: folderPath, includeFolders: includeFolders)
+	}
+	
+	public func documentPaths(at folderPath: DocPath, includingFolders: Bool) throws -> [DocPath] {
+		return try lowDocDB.documentPaths(at: folderPath, includingFolders: includingFolders)
+	}
+	
+	public func documentIsFolder(_ docPath: DocPath) -> Bool {
 		return lowDocDB.documentIsFolder(docPath)
-    }
-    
-    public func documents(at folderPath: DocPath) throws -> [DocDBDictionary] {
+	}
+	
+	public func documents(at folderPath: DocPath) throws -> [DocDBDictionary] {
 		let dataDocuments = try lowDocDB.documents(at: folderPath)
-		return try dataDocuments.compactMap {
+		return try dataDocuments.map {
 			try self.options.serializer.decode(data: $0)
 		}
-    }
+	}
 	
 	public func queryDocuments(
 		at folderPath: DocPath,
@@ -70,7 +80,7 @@ public class DocDB {
 			throw DocDBError.documentPathMustBeADirectory
 		}
 		
-		let documentsIterator = try self.enumerator(at: folderPath)
+		let documentsIterator = try self.enumerator(at: folderPath, includeFolders: false)
 		
 		var output: [DocDBDictionary] = []
 		
@@ -158,10 +168,14 @@ public class DocDB {
 		
 		return output
 	}
-    
+	
 	// DELETE
 	
-    public func deleteDocument(at docPath: DocPath) throws {
+	public func deleteDocument(at docPath: DocPath) throws {
 		try lowDocDB.deleteDocument(at: docPath)
-    }
+	}
+	
+	public func deleteItem(at docPath: DocPath) throws {
+		try lowDocDB.deleteItem(at: docPath)
+	}
 }

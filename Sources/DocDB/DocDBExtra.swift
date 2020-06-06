@@ -24,6 +24,7 @@ public struct DocDBQueryOptions {
 public enum DocDBError: Error {
 	case documentPathMustBeADirectory
 	case enumeratorError
+	case documentNotFoundForUpdate
 }
 
 public struct DocDBOptions {

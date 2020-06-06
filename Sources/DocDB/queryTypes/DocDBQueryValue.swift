@@ -21,7 +21,7 @@ public enum DocDBQueryValue {
 	case isLessThanOrEqualTo(_ value: AnyComparable, key: String)
 	case isGreaterThan(_ value: AnyComparable, key: String)
 	case isGreaterThanOrEqualTo(_ value: AnyComparable, key: String)
-
+	
 	case isAnyOf(_ values: ArrayAnyEquatable, key: String)
 	case isNoneOf(_ values: ArrayAnyEquatable, key: String)
 }
