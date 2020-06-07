@@ -12,27 +12,27 @@ let myDevicePath = try devicesPath.appending("device1.data")
 
 // add
 try docDB.addDocument(at: myDevicePath, dictionary: [
-	"os": "iOS",
-	"version": "13.1",
-	"something": 1,
-	"test1": 12.1,
-	"test2": "something",
-	"testArray": [1,2,3,10,5,5,6,7,8],
-	"testArray2": ["1","2","3","4","5","5","6","7","8"]
+    "os": "iOS",
+    "version": "13.1",
+    "something": 1,
+    "test1": 12.1,
+    "test2": "something",
+    "testArray": [1,2,3,10,5,5,6,7,8],
+    "testArray2": ["1","2","3","4","5","5","6","7","8"]
 ])
 
 // retrieve
 if let deviceDoc = try docDB.document(at: myDevicePath) {
-	print(deviceDoc["os"]) // "iOS"
+    print(deviceDoc["os"]) // "iOS"
 }
 
 // query
 let docsGreaterThan: [DocDBDictionary] = try docDB.queryDocuments(
-	at: devicesPath,
-	query: [
-		.isGreaterThan(.init(1), key: "something")
-	],
-	options: .init(limit: .max, columns: ["something", "test2"])
+    at: devicesPath,
+    query: [
+    	.isGreaterThan(.init(1), key: "something")
+    ],
+    options: .init(limit: .max, columns: ["something", "test2"])
 )
 
 // delete
