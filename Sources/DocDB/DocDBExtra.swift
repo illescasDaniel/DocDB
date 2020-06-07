@@ -1,11 +1,15 @@
+import struct Foundation.URL
+
 public typealias DocDBDictionary = [String: Any]
 
 public struct DocDBQueryOptions {
 	
 	public let limit: UInt32
+	public let columns: [String]
 	
-	public init(limit: UInt32) {
+	public init(limit: UInt32 = 100, columns: [String] = []) {
 		self.limit = limit
+		self.columns = columns
 	}
 	
 	// TODO?
@@ -28,8 +32,12 @@ public enum DocDBError: Error {
 }
 
 public struct DocDBOptions {
+	
+	public let maxFolderDepth: UInt8
 	public let serializer: DocDBSerializer
-	public init(serializer: DocDBSerializer) {
+	
+	public init(maxFolderDepth: UInt8, serializer: DocDBSerializer) {
+		self.maxFolderDepth = maxFolderDepth
 		self.serializer = serializer
 	}
 }

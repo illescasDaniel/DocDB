@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  AnyComparable.swift
 //  
 //
 //  Created by Daniel Illescas Romero on 05/06/2020.

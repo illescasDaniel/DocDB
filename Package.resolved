@@ -3,11 +3,11 @@
     "pins": [
       {
         "package": "LowDocDB",
-        "repositoryURL": "/Users/daniel/Documents/Programming/IDE_Projects/Xcode/Frameworks.nosync/LowDocDB",
+        "repositoryURL": "https://github.com/illescasDaniel/LowDocDB.git",
         "state": {
           "branch": null,
-          "revision": "4886ba35413760a13c83e268f4f59e535ed98278",
-          "version": "0.2.2"
+          "revision": "2fbd3146f77b0ab006b4704aeb14641431922e35",
+          "version": "0.2.6"
         }
       }
     ]
