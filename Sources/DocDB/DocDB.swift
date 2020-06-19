@@ -8,7 +8,7 @@
 import class Foundation.NSNull
 import class LowDocDB.LowDocDB
 import struct Foundation.URL
-import struct LowDocDB.DocPath
+@_exported import struct LowDocDB.DocPath
 #if canImport(Combine)
 import struct Combine.AnyPublisher
 #endif
@@ -139,6 +139,7 @@ public class DocDB {
 		return try QueryIterator(folderPath: folderPath, query: query, options: options, docDB: self)
 	}
 	
+	#if canImport(Combine)
 	/// Seaches for documents of the database given a location, a query and some options.
 	/// This method returns a `AnyPublisher`, so you can call its `sink` method to get the next values of the query.
 	/// - Parameters:
@@ -155,6 +156,7 @@ public class DocDB {
 	) throws -> AnyPublisher<DocDBDictionary, Error> {
 		return QueryPublisher(queryIterator: try self.queryDocumentsIterator(at: folderPath, query: query, options: options)).eraseToAnyPublisher()
 	}
+	#endif
 	
 	/// Seaches for documents of the database given a location, a query and some options.
 	/// This method returns all results at once, consider using `queryDocumentsIterator` instead for returning just the next query result.

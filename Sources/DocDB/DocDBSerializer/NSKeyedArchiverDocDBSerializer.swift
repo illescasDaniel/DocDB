@@ -9,6 +9,7 @@ import struct Foundation.Data
 import class Foundation.NSKeyedArchiver
 import class Foundation.NSKeyedUnarchiver
 
+@available(iOS 11.0, *)
 public class NSKeyedArchiverDocDBSerializer: DocDBSerializer {
 	
 	public init() {}

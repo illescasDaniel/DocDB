@@ -114,7 +114,9 @@ final class DocDBTests: XCTestCase {
 		try? fileManager.removeItem(at: rootFolder)
 		try? fileManager.createDirectory(at: rootFolder, withIntermediateDirectories: false, attributes: nil)
 		measure {
-			serializeDocs(serializer: NSKeyedArchiverDocDBSerializer(), iterations: 1000)
+			if #available(iOS 11.0, *) {
+				serializeDocs(serializer: NSKeyedArchiverDocDBSerializer(), iterations: 1000)
+			}
 		}
 		try? fileManager.removeItem(at: rootFolder)
 	}

@@ -10,7 +10,6 @@ import enum Combine.Subscribers
 import protocol Combine.Subscriber
 import protocol Combine.Subscription
 import protocol Combine.Publisher
-#endif
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 internal class QuerySubscription<S: Subscriber>: Subscription where S.Input == DocDBDictionary, S.Failure == Error {
@@ -65,3 +64,4 @@ internal class QueryPublisher: Publisher {
 		subscriber.receive(subscription: subscription)
 	}
 }
+#endif
