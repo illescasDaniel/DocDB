@@ -104,20 +104,20 @@ final class DocDBTests: XCTestCase {
 	func testMeasureSavingDocsAsJSON() {
 		try? fileManager.removeItem(at: rootFolder)
 		try? fileManager.createDirectory(at: rootFolder, withIntermediateDirectories: false, attributes: nil)
-		measure {
+		//measure {
 			serializeDocs(serializer: JSONSerializationDocDBSerializer(), iterations: 1000)
-		}
+		//}
 		try? fileManager.removeItem(at: rootFolder)
 	}
 	
 	func testMeasureSavingBinaryDocs() {
 		try? fileManager.removeItem(at: rootFolder)
 		try? fileManager.createDirectory(at: rootFolder, withIntermediateDirectories: false, attributes: nil)
-		measure {
+		//measure {
 			if #available(iOS 11.0, *) {
 				serializeDocs(serializer: NSKeyedArchiverDocDBSerializer(), iterations: 1000)
 			}
-		}
+		//}
 		try? fileManager.removeItem(at: rootFolder)
 	}
 	
@@ -395,6 +395,7 @@ final class DocDBTests: XCTestCase {
 	}
 	
 	func testQueryPublisher() {
+		#if canImport(Combine)
 		if #available(OSX 10.15, *) {
 			let expectationPublishers = expectation(description: "testQueryPublisher")
 			expectationPublishers.expectedFulfillmentCount = 6
@@ -557,6 +558,7 @@ final class DocDBTests: XCTestCase {
 			
 			self.wait(for: [expectationPublishers], timeout: 5)
 		}
+		#endif
 	}
 	
 	// MARK: - Convenience
